@@ -16,15 +16,30 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f2f8f5',
-                            100: '#e1f0e6',
-                            500: '#2d6a4f', // Forest green
-                            600: '#1b4332', // Darker forest
-                            900: '#081c15',
+                            50: '#ecf5f0',
+                            100: '#d4e9e1',
+                            200: '#a8d5c4',
+                            300: '#7cc0a8',
+                            400: '#52a989',
+                            500: '#2d8659', // Rich forest green
+                            600: '#1f6b45', // Dark forest
+                            700: '#155a38', // Very dark forest
+                            800: '#0f472d', // Almost black green
+                            900: '#082b1d', // Deep forest night
+                        },
+                        forest: {
+                            light: '#e8f4f0',
+                            sage: '#8ba899',
+                            moss: '#6b8e6f',
+                            pine: '#2d5a3d',
+                            dark: '#1a3a26',
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'forest-pattern': "url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><defs><pattern id=%22pattern%22 x=%220%22 y=%220%22 width=%22100%22 height=%22100%22 patternUnits=%22userSpaceOnUse%22><path d=%22M0,50 Q25,30 50,50 T100,50%22 fill=%22none%22 stroke=%22rgba(0,0,0,0.05)%22 stroke-width=%222%22/></pattern></defs><rect width=%22100%22 height=%22100%22 fill=%22white%22/><rect width=%22100%22 height=%22100%22 fill=%22url(%23pattern)%22/></svg>')"  
                     }
                 }
             }
@@ -34,35 +49,35 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="text-gray-800 font-sans antialiased flex flex-col min-h-screen relative">
+<body class="text-gray-900 font-sans antialiased flex flex-col min-h-screen relative">
 
-    <!-- Ausgebleichter Garten-Hintergrund (Glassmorphismus-Style) -->
+    <!-- Waldähnlicher Garten-Hintergrund -->
     <div class="fixed inset-0 z-[-1]">
-        <img src="https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&q=80" alt="Garten Hintergrund" class="w-full h-full object-cover opacity-60" />
-        <div class="absolute inset-0 bg-gray-50/85 backdrop-blur-[3px]"></div>
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80" alt="Wald und Natur" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-brand-900/75 backdrop-blur-[2px]"></div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white/80 backdrop-blur-md shadow-sm z-50 transition-all border-b border-gray-200/50">
+    <nav class="fixed w-full bg-brand-800/90 backdrop-blur-md shadow-lg z-50 transition-all border-b border-brand-600/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex-shrink-0 flex items-center gap-3">
-                    <div class="bg-brand-500 p-2 rounded-lg text-white">
-                        <i data-lucide="axe" class="w-6 h-6"></i>
+                    <div class="bg-brand-400 p-2 rounded-lg text-brand-900">
+                        <i data-lucide="trees" class="w-6 h-6"></i>
                     </div>
-                    <a href="#" class="font-bold text-xl md:text-2xl text-brand-900 tracking-tight">
-                        Mario Ifkovits<span class="block text-xs text-brand-500 font-medium uppercase tracking-wider">Haus, Garten & Forst</span>
+                    <a href="#" class="font-bold text-xl md:text-2xl text-white tracking-tight">
+                        Mario Ifkovits<span class="block text-xs text-brand-300 font-medium uppercase tracking-wider">Haus, Garten & Forst</span>
                     </a>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#leistungen" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Leistungen</a>
-                    <a href="#preise" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Preise</a>
-                    <a href="#ki-schaetzer" class="text-brand-600 hover:text-brand-800 font-medium transition-colors flex items-center gap-1">✨ KI-Schätzer</a>
-                    <a href="#kontakt" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Kontakt</a>
+                    <a href="#leistungen" class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Leistungen</a>
+                    <a href="#preise" class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Preise</a>
+                    <a href="#ki-schaetzer" class="text-brand-400 hover:text-brand-300 font-medium transition-colors flex items-center gap-1">✨ KI-Schätzer</a>
+                    <a href="#kontakt" class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Kontakt</a>
                 </div>
                 <!-- Mobile menu button (for later extension by Claude) -->
                 <div class="md:hidden flex items-center">
-                    <button class="text-gray-600 hover:text-brand-600 focus:outline-none">
+                    <button class="text-brand-100 hover:text-brand-400 focus:outline-none">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
@@ -73,27 +88,27 @@
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <!-- Background Image with green tint -->
-            <img src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb65?auto=format&fit=crop&q=80" alt="Wald und Natur" class="w-full h-full object-cover" />
-            <div class="absolute inset-0 bg-brand-900/80 mix-blend-multiply"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-50 to-transparent"></div>
+            <!-- Forest background image -->
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80" alt="Wald und Natur" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-900/85 via-brand-800/70 to-brand-700/60 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-900 via-transparent to-transparent"></div>
         </div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-brand-500/20 text-brand-100 backdrop-blur-md border border-brand-400/30 text-sm font-semibold tracking-wider mb-6">
+            <span class="inline-block py-2 px-4 rounded-full bg-brand-500/30 text-brand-50 backdrop-blur-sm border border-brand-300/40 text-sm font-semibold tracking-wider mb-6">
                 Neuberg im Burgenland & Umgebung
             </span>
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-md">
-                Ihr verlässlicher Partner fürs <span class="text-green-400">Grobe & Feine</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-lg">
+                Ihr verlässlicher Partner fürs <span class="text-brand-300">Grobe & Feine</span>
             </h1>
-            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto drop-shadow">
+            <p class="text-lg md:text-xl text-brand-50 mb-10 max-w-2xl mx-auto drop-shadow-lg">
                 Verlässlicher Service rund ums Haus, sorgfältige Grünflächenbetreuung und tatkräftige Unterstützung bei Forstarbeiten.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#kontakt" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1">
+                <a href="#kontakt" class="bg-brand-400 hover:bg-brand-300 text-brand-900 font-bold py-3 px-8 rounded-lg shadow-lg shadow-brand-400/40 transition-all transform hover:-translate-y-1">
                     Kostenlos anfragen
                 </a>
-                <a href="#leistungen" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold py-3 px-8 rounded-lg transition-all">
+                <a href="#leistungen" class="bg-brand-700/50 hover:bg-brand-600/60 backdrop-blur-md text-white border border-brand-300/50 font-bold py-3 px-8 rounded-lg transition-all">
                     Tätigkeiten ansehen
                 </a>
             </div>
@@ -161,66 +176,66 @@
     </section>
 
     <!-- Preise Section -->
-    <section id="preise" class="py-20 bg-white/40 backdrop-blur-sm border-y border-white/50">
+    <section id="preise" class="py-20 bg-brand-800/30 backdrop-blur-sm border-y border-brand-700/30">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-brand-900 mb-4">Transparente Preise</h2>
-                <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
-                <p class="text-gray-600">Faire Konditionen für ehrliche Arbeit. Keine versteckten Kosten.</p>
+                <h2 class="text-3xl font-bold text-brand-100 mb-4">Transparente Preise</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-brand-100">Faire Konditionen für ehrliche Arbeit. Keine versteckten Kosten.</p>
             </div>
 
-            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-xl border border-white">
+            <div class="bg-brand-700/50 backdrop-blur-lg rounded-3xl p-8 md:p-12 shadow-2xl border border-brand-500/40">
                 <div class="space-y-6">
                     <!-- Preis 1 -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-brand-600/30">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900">Standard-Stundensatz</h4>
-                            <p class="text-sm text-gray-600">Für allgemeine Garten- und Hausarbeiten (ohne schwere Maschinen)</p>
+                            <h4 class="text-lg font-bold text-white">Standard-Stundensatz</h4>
+                            <p class="text-sm text-brand-200">Für allgemeine Garten- und Hausarbeiten (ohne schwere Maschinen)</p>
                         </div>
-                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">38,00 € <span class="text-sm font-normal text-gray-500">/ Std.</span></div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-300">38,00 € <span class="text-sm font-normal text-brand-200">/ Std.</span></div>
                     </div>
                     
                     <!-- Preis 2 -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-brand-600/30">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900">Einsatz mit Kleinmaschinen</h4>
-                            <p class="text-sm text-gray-600">Inkl. Betriebsmittel (Motorsäge, Rasenmäher, Freischneider etc.)</p>
+                            <h4 class="text-lg font-bold text-white">Einsatz mit Kleinmaschinen</h4>
+                            <p class="text-sm text-brand-200">Inkl. Betriebsmittel (Motorsäge, Rasenmäher, Freischneider etc.)</p>
                         </div>
-                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">48,00 € <span class="text-sm font-normal text-gray-500">/ Std.</span></div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-300">48,00 € <span class="text-sm font-normal text-brand-200">/ Std.</span></div>
                     </div>
 
                     <!-- Preis 3 -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-brand-600/30">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900">Entsorgung & Abtransport</h4>
-                            <p class="text-sm text-gray-600">Grünschnitt, Geäst oder Sperrmüll</p>
+                            <h4 class="text-lg font-bold text-white">Entsorgung & Abtransport</h4>
+                            <p class="text-sm text-brand-200">Grünschnitt, Geäst oder Sperr müll</p>
                         </div>
-                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600 text-right">
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-300 text-right">
                             <span class="block">Nach Aufwand</span>
-                            <span class="text-sm font-normal text-gray-500">+ Deponiegebühren</span>
+                            <span class="text-sm font-normal text-brand-200">+ Deponiegebühren</span>
                         </div>
                     </div>
 
                     <!-- Anfahrt -->
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900">Anfahrtskosten</h4>
-                            <p class="text-sm text-gray-600">Im Gemeindegebiet Neuberg im Burgenland kostenlos.</p>
+                            <h4 class="text-lg font-bold text-white">Anfahrtskosten</h4>
+                            <p class="text-sm text-brand-200">Im Gemeindegebiet Neuberg im Burgenland kostenlos.</p>
                         </div>
-                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">0,42 € <span class="text-sm font-normal text-gray-500">/ km</span></div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-300">0,42 € <span class="text-sm font-normal text-brand-200">/ km</span></div>
                     </div>
                 </div>
 
-                <div class="mt-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
+                <div class="mt-8 bg-brand-600/40 border-l-4 border-brand-400 p-4 rounded-r-lg">
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                            <i data-lucide="info" class="w-5 h-5 text-brand-300"></i>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm text-blue-800 font-medium">
+                            <p class="text-sm text-brand-100 font-medium">
                                 Kleinunternehmerregelung
                             </p>
-                            <p class="text-sm text-blue-700 mt-1">
+                            <p class="text-sm text-brand-100 mt-1">
                                 Alle angegebenen Preise sind Endpreise. Gemäß § 6 Abs. 1 Z 27 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen.
                             </p>
                         </div>
@@ -229,51 +244,51 @@
             </div>
             
             <div class="text-center mt-10">
-                <p class="text-gray-600">Gerne erstelle ich Ihnen auch ein individuelles Pauschalangebot für größere Projekte oder regelmäßige Betreuung!</p>
+                <p class="text-brand-100">Gerne erstelle ich Ihnen auch ein individuelles Pauschalangebot für größere Projekte oder regelmäßige Betreuung!</p>
             </div>
         </div>
     </section>
 
     <!-- KI-Schätzer Section -->
-    <section id="ki-schaetzer" class="py-20 bg-brand-50/40 backdrop-blur-sm border-b border-brand-100/50">
+    <section id="ki-schaetzer" class="py-20 bg-brand-700/40 backdrop-blur-sm border-b border-brand-700/50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <div class="inline-flex items-center justify-center p-3 bg-white rounded-full shadow-sm mb-4 text-brand-500">
+                <div class="inline-flex items-center justify-center p-3 bg-brand-600/40 rounded-full shadow-lg mb-4 text-brand-300">
                     <i data-lucide="sparkles" class="w-8 h-8"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-brand-900 mb-4">✨ KI-Projekt-Schätzer</h2>
-                <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
-                <p class="text-gray-600">
+                <h2 class="text-3xl font-bold text-brand-100 mb-4">✨ KI-Projekt-Schätzer</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-brand-400 to-brand-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-brand-100">
                     Beschreiben Sie kurz Ihr Vorhaben (z.B. "ca. 500m² Rasen mähen, das Gras ist schon kniehoch"). 
                     Mein intelligenter Assistent gibt Ihnen sofort eine unverbindliche, grobe Einschätzung des Aufwands und der Kosten!
                 </p>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
+            <div class="bg-brand-700/50 backdrop-blur-lg rounded-2xl p-6 md:p-8 shadow-2xl border border-brand-500/40">
                 <div class="space-y-4">
-                    <label for="project-description" class="block text-sm font-medium text-gray-700">Was gibt es zu tun?</label>
-                    <textarea id="project-description" rows="4" placeholder="Beispiel: Ich habe 3 große Laubbäume im Garten, bei denen Totholz entfernt und die Äste entsorgt werden müssen..." class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 resize-none"></textarea>
+                    <label for="project-description" class="block text-sm font-medium text-white">Was gibt es zu tun?</label>
+                    <textarea id="project-description" rows="4" placeholder="Beispiel: Ich habe 3 große Laubbäume im Garten, bei denen Totholz entfernt und die Äste entsorgt werden müssen..." class="w-full px-4 py-3 border border-brand-500/40 rounded-xl focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90 resize-none placeholder-gray-500"></textarea>
                     
-                    <button id="btn-estimate" onclick="generateEstimate()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl transition-all flex justify-center items-center gap-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <button id="btn-estimate" onclick="generateEstimate()" class="w-full sm:w-auto bg-brand-400 hover:bg-brand-300 text-brand-900 font-bold py-3 px-6 rounded-xl transition-all flex justify-center items-center gap-2 shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5">
                         ✨ Projekt einschätzen lassen
                     </button>
                 </div>
 
                 <!-- Lade-Indikator -->
                 <div id="estimate-loading" class="hidden mt-8 text-center py-8">
-                    <i data-lucide="loader-2" class="w-8 h-8 text-brand-500 animate-spin mx-auto mb-4"></i>
-                    <p class="text-gray-600 animate-pulse">Die KI analysiert Ihr Projekt und berechnet den Aufwand...</p>
+                    <i data-lucide="loader-2" class="w-8 h-8 text-brand-300 animate-spin mx-auto mb-4"></i>
+                    <p class="text-brand-100 animate-pulse">Die KI analysiert Ihr Projekt und berechnet den Aufwand...</p>
                 </div>
 
                 <!-- Ergebnis-Bereich -->
-                <div id="estimate-result-container" class="hidden mt-8 pt-8 border-t border-gray-100">
-                    <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <i data-lucide="bot" class="w-5 h-5 text-brand-500"></i> Einschätzung des Assistenten:
+                <div id="estimate-result-container" class="hidden mt-8 pt-8 border-t border-brand-600/50">
+                    <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="bot" class="w-5 h-5 text-brand-300"></i> Einschätzung des Assistenten:
                     </h4>
-                    <div id="estimate-result" class="prose prose-brand max-w-none text-gray-700 space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                    <div id="estimate-result" class="prose prose-invert max-w-none text-brand-100 space-y-4 bg-brand-600/30 p-6 rounded-xl border border-brand-500/20">
                         <!-- Ergebnis wird hier eingefügt -->
                     </div>
-                    <p class="text-xs text-gray-400 mt-4 text-center">
+                    <p class="text-xs text-brand-300/60 mt-4 text-center">
                         *Hinweis: Dies ist eine KI-generierte, völlig unverbindliche Schätzung. Ein exaktes Angebot erhalten Sie bei persönlicher Anfrage.
                     </p>
                 </div>
@@ -282,75 +297,75 @@
     </section>
 
     <!-- Kontakt Section -->
-    <section id="kontakt" class="py-20 bg-brand-900 text-white">
+    <section id="kontakt" class="py-20 bg-gradient-to-b from-brand-800 to-brand-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 
                 <!-- Kontakt Info -->
                 <div>
                     <h2 class="text-3xl font-bold mb-4">Lassen Sie uns zusammenarbeiten</h2>
-                    <div class="w-20 h-1 bg-brand-500 rounded-full mb-8"></div>
-                    <p class="text-gray-300 mb-8 text-lg">
+                    <div class="w-20 h-1 bg-gradient-to-r from-brand-400 to-brand-500 rounded-full mb-8"></div>
+                    <p class="text-brand-100 mb-8 text-lg">
                         Ganz gleich, ob der Garten zuwuchert, der Winter vor der Tür steht oder das Brennholz gespalten werden muss – melden Sie sich einfach bei mir!
                     </p>
                     
                     <div class="space-y-6">
                         <div class="flex items-center gap-4">
-                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                            <div class="bg-brand-600/60 p-3 rounded-full text-brand-300">
                                 <i data-lucide="map-pin" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400">Standort</p>
-                                <p class="font-medium text-lg">7532 Neuberg im Burgenland</p>
+                                <p class="text-sm text-brand-200">Standort</p>
+                                <p class="font-medium text-lg text-white">7532 Neuberg im Burgenland</p>
                             </div>
                         </div>
                         
                         <div class="flex items-center gap-4">
-                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                            <div class="bg-brand-600/60 p-3 rounded-full text-brand-300">
                                 <i data-lucide="phone" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400">Telefon</p>
-                                <p class="font-medium text-lg"><a href="tel:+43000000000" class="hover:text-green-400 transition-colors">+43 (0) XXX XXX XX XX</a></p>
+                                <p class="text-sm text-brand-200">Telefon</p>
+                                <p class="font-medium text-lg"><a href="tel:+43000000000" class="hover:text-brand-300 transition-colors">+43 (0) XXX XXX XX XX</a></p>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                            <div class="bg-brand-600/60 p-3 rounded-full text-brand-300">
                                 <i data-lucide="mail" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-400">E-Mail</p>
-                                <p class="font-medium text-lg"><a href="mailto:office@ifkovits-service.at" class="hover:text-green-400 transition-colors">office@ifkovits-service.at</a></p>
+                                <p class="text-sm text-brand-200">E-Mail</p>
+                                <p class="font-medium text-lg"><a href="mailto:office@ifkovits-service.at" class="hover:text-brand-300 transition-colors">office@ifkovits-service.at</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Kontakt Formular (Note for Claude: Connect via Formspree or similar for GitHub Pages) -->
-                <div class="bg-white rounded-2xl p-8 shadow-2xl">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Schnelle Anfrage</h3>
+                <div class="bg-brand-700/60 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-brand-500/40">
+                    <h3 class="text-2xl font-bold text-white mb-6">Schnelle Anfrage</h3>
                     <!-- TODO für Claude: action URL mit Formspree oder Web3Forms Endpunkt austauschen -->
                     <form action="#" method="POST" class="space-y-4">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                            <label for="name" class="block text-sm font-medium text-brand-200 mb-1">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                                <label for="phone" class="block text-sm font-medium text-brand-200 mb-1">Telefon</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                                <label for="email" class="block text-sm font-medium text-brand-200 mb-1">E-Mail</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                             </div>
                         </div>
                         <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Ihr Anliegen</label>
-                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 resize-none"></textarea>
+                            <label for="message" class="block text-sm font-medium text-brand-200 mb-1">Ihr Anliegen</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90 resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-4 rounded-lg transition-colors flex justify-center items-center gap-2">
+                        <button type="submit" class="w-full bg-brand-400 hover:bg-brand-300 text-brand-900 font-bold py-3 px-4 rounded-lg transition-all flex justify-center items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             <i data-lucide="send" class="w-5 h-5"></i> Nachricht senden
                         </button>
                     </form>
@@ -360,21 +375,20 @@
     </section>
 
     <!-- Footer / Impressum -->
-    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <span class="text-white font-bold text-lg block">Mario Ifkovits</span>
-                <span>Haus, Garten & Forstservice</span>
-            </div>
-            
-            <div class="text-center text-sm space-y-2">
-                <p><strong>Impressum:</strong> Mario Ifkovits | [Straße/Hausnummer] | 7532 Neuberg im Burgenland</p>
-                <p>Einzelunternehmer | Freies Gewerbe</p>
-                <p>USt-IdNr.: Befreit gem. § 6 Abs. 1 Z 27 UStG (Kleinunternehmer)</p>
-            </div>
-            
-            <div class="text-sm">
-            &copy; <span id="year"></span> Alle Rechte vorbehalten.
+<footer class="bg-brand-900/80 text-brand-100 py-12 border-t border-brand-700/50 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-center md:text-left">
+            <span class="text-white font-bold text-lg block">Mario Ifkovits</span>
+            <span class="text-brand-200">Haus, Garten & Forstservice</span>
+        </div>
+        
+        <div class="text-center text-sm space-y-2">
+            <p><strong class="text-white">Impressum:</strong> Mario Ifkovits | [Straße/Hausnummer] | 7532 Neuberg im Burgenland</p>
+            <p class="text-brand-200">Einzelunternehmer | Freies Gewerbe</p>
+            <p class="text-brand-200">USt-IdNr.: Befreit gem. § 6 Abs. 1 Z 27 UStG (Kleinunternehmer)</p>
+        </div>
+        
+        <div class="text-sm text-brand-200">
         </div>
     </div>
 </footer>
