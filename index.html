@@ -6,6 +6,9 @@
     <title>Mario Ifkovits | Haus, Garten & Forstservice in Neuberg im Burgenland</title>
     <meta name="description" content="Professioneller und verlässlicher Service für Haus, Garten und Forst in Neuberg im Burgenland. Ihr Partner für Rasenmähen, Holzspalten, Entrümpelungen und mehr.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -395,11 +398,16 @@
 
 <!-- Initialize Icons & Year -->
 <script>
+    // Setze das aktuelle Jahr im Footer
+    const yearElement = document.getElementById('year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+    
     lucide.createIcons();
-    document.getElementById('year').textContent = new Date().getFullYear();
 
     // --- Gemini API Integration: KI-Projekt-Schätzer ---
-    const apiKey = ""; // API-Schlüssel wird von der Umgebung bereitgestellt
+    const apiKey = localStorage.getItem('gemini_api_key') || ''; // API-Schlüssel von localStorage oder leer
 
     // Hilfsfunktion: API Call mit Exponential Backoff (Retries bei Netzwerkproblemen)
     async function fetchWithRetry(url, options, maxRetries = 5) {
@@ -419,6 +427,16 @@
     }
 
     async function generateEstimate() {
+        // Überprüfe ob API Key gesetzt ist
+        if (!apiKey || apiKey.trim() === '') {
+            const resultDiv = document.getElementById('estimate-result');
+            const resultContainer = document.getElementById('estimate-result-container');
+            resultDiv.innerHTML = `<div class="bg-amber-600/40 border-l-4 border-amber-400 p-4 rounded-r-lg"><p class="text-amber-100"><strong>⚠️ Hinweis:</strong> Der KI-Schätzer ist zur Zeit nicht konfiguriert. Bitte nutzen Sie direkt das Kontaktformular unten für eine genaue Kostenkalkulation.</p></div>`;
+            resultContainer.classList.remove('hidden');
+            lucide.createIcons();
+            return;
+        }
+        
         const descriptionInput = document.getElementById('project-description');
         const description = descriptionInput.value.trim();
         const btn = document.getElementById('btn-estimate');
