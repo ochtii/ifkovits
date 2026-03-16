@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="de-AT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Ifkovits | Haus, Garten & Forstservice in Neuberg im Burgenland</title>
+    <meta name="description" content="Professioneller und verlässlicher Service für Haus, Garten und Forst in Neuberg im Burgenland. Ihr Partner für Rasenmähen, Holzspalten, Entrümpelungen und mehr.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f2f8f5',
+                            100: '#e1f0e6',
+                            500: '#2d6a4f', // Forest green
+                            600: '#1b4332', // Darker forest
+                            900: '#081c15',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="text-gray-800 font-sans antialiased flex flex-col min-h-screen relative">
+
+    <!-- Geiler, ausgebleichter Garten-Hintergrund (Glassmorphismus-Style) -->
+    <div class="fixed inset-0 z-[-1]">
+        <img src="https://images.unsplash.com/photo-1558904541-efa843a96f09?auto=format&fit=crop&q=80" alt="Garten Hintergrund" class="w-full h-full object-cover opacity-60" />
+        <div class="absolute inset-0 bg-gray-50/85 backdrop-blur-[3px]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/80 backdrop-blur-md shadow-sm z-50 transition-all border-b border-gray-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="bg-brand-500 p-2 rounded-lg text-white">
+                        <i data-lucide="axe" class="w-6 h-6"></i>
+                    </div>
+                    <a href="#" class="font-bold text-xl md:text-2xl text-brand-900 tracking-tight">
+                        Mario Ifkovits<span class="block text-xs text-brand-500 font-medium uppercase tracking-wider">Haus, Garten & Forst</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#leistungen" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Leistungen</a>
+                    <a href="#preise" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Preise</a>
+                    <a href="#ki-schaetzer" class="text-brand-600 hover:text-brand-800 font-medium transition-colors flex items-center gap-1">✨ KI-Schätzer</a>
+                    <a href="#kontakt" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">Kontakt</a>
+                </div>
+                <!-- Mobile menu button (for later extension by Claude) -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 hover:text-brand-600 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Background Image with green tint -->
+            <img src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb65?auto=format&fit=crop&q=80" alt="Wald und Natur" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-brand-900/80 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-50 to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-500/20 text-brand-100 backdrop-blur-md border border-brand-400/30 text-sm font-semibold tracking-wider mb-6">
+                Neuberg im Burgenland & Umgebung
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-md">
+                Ihr verlässlicher Partner fürs <span class="text-green-400">Grobe & Feine</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto drop-shadow">
+                Verlässlicher Service rund ums Haus, sorgfältige Grünflächenbetreuung und tatkräftige Unterstützung bei Forstarbeiten.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#kontakt" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1">
+                    Kostenlos anfragen
+                </a>
+                <a href="#leistungen" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold py-3 px-8 rounded-lg transition-all">
+                    Tätigkeiten ansehen
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leistungen Section -->
+    <section id="leistungen" class="py-20 bg-gray-50/30 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-brand-900 mb-4">Meine Leistungen</h2>
+                <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Als freier Dienstleister packe ich dort an, wo Sie Unterstützung brauchen. Unkompliziert, termintreu und mit Handschlagqualität.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1: Haus -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors text-brand-600">
+                        <i data-lucide="home" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Hausbetreuung</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Kleine Reparaturen & Instandhaltung</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Entrümpelungen & Aufräumarbeiten</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Winterdienst (Schneeräumen, Streuen)</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Botengänge & Fahrten</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Garten -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors text-brand-600">
+                        <i data-lucide="leaf" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Gartenpflege</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Rasenmähen & Vertikutieren</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Hecken- und Strauchschnitt</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Unkraut jäten & Laub rechen</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Entsorgung von Grünschnitt</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Forst -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors text-brand-600">
+                        <i data-lucide="trees" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Forstservice</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Brennholz sägen & spalten</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Astwerk & Gestrüpp wegräumen</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Einfache Waldpflege & Aufräumen</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Holz schlichten</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-xs text-center text-gray-400 mt-8">
+                * Alle Tätigkeiten werden streng im Rahmen des freien Gewerbes (z.B. Reinigungsgewerbe, freie Forstgewerbe) ausgeführt. Keine reglementierten Handwerkstätigkeiten.
+            </p>
+        </div>
+    </section>
+
+    <!-- Preise Section -->
+    <section id="preise" class="py-20 bg-white/40 backdrop-blur-sm border-y border-white/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-brand-900 mb-4">Transparente Preise</h2>
+                <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600">Faire Konditionen für ehrliche Arbeit. Keine versteckten Kosten.</p>
+            </div>
+
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-xl border border-white">
+                <div class="space-y-6">
+                    <!-- Preis 1 -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900">Standard-Stundensatz</h4>
+                            <p class="text-sm text-gray-600">Für allgemeine Garten- und Hausarbeiten (ohne schwere Maschinen)</p>
+                        </div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">38,00 € <span class="text-sm font-normal text-gray-500">/ Std.</span></div>
+                    </div>
+                    
+                    <!-- Preis 2 -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900">Einsatz mit Kleinmaschinen</h4>
+                            <p class="text-sm text-gray-600">Inkl. Betriebsmittel (Motorsäge, Rasenmäher, Freischneider etc.)</p>
+                        </div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">48,00 € <span class="text-sm font-normal text-gray-500">/ Std.</span></div>
+                    </div>
+
+                    <!-- Preis 3 -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b border-gray-200">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900">Entsorgung & Abtransport</h4>
+                            <p class="text-sm text-gray-600">Grünschnitt, Geäst oder Sperrmüll</p>
+                        </div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600 text-right">
+                            <span class="block">Nach Aufwand</span>
+                            <span class="text-sm font-normal text-gray-500">+ Deponiegebühren</span>
+                        </div>
+                    </div>
+
+                    <!-- Anfahrt -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4">
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-900">Anfahrtskosten</h4>
+                            <p class="text-sm text-gray-600">Im Gemeindegebiet Neuberg im Burgenland kostenlos.</p>
+                        </div>
+                        <div class="mt-2 sm:mt-0 text-xl font-black text-brand-600">0,42 € <span class="text-sm font-normal text-gray-500">/ km</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-800 font-medium">
+                                Kleinunternehmerregelung
+                            </p>
+                            <p class="text-sm text-blue-700 mt-1">
+                                Alle angegebenen Preise sind Endpreise. Gemäß § 6 Abs. 1 Z 27 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer ausgewiesen.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <p class="text-gray-600">Gerne erstelle ich Ihnen auch ein individuelles Pauschalangebot für größere Projekte oder regelmäßige Betreuung!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- KI-Schätzer Section -->
+    <section id="ki-schaetzer" class="py-20 bg-brand-50/40 backdrop-blur-sm border-b border-brand-100/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center p-3 bg-white rounded-full shadow-sm mb-4 text-brand-500">
+                    <i data-lucide="sparkles" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-brand-900 mb-4">✨ KI-Projekt-Schätzer</h2>
+                <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600">
+                    Beschreiben Sie kurz Ihr Vorhaben (z.B. "ca. 500m² Rasen mähen, das Gras ist schon kniehoch"). 
+                    Mein intelligenter Assistent gibt Ihnen sofort eine unverbindliche, grobe Einschätzung des Aufwands und der Kosten!
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
+                <div class="space-y-4">
+                    <label for="project-description" class="block text-sm font-medium text-gray-700">Was gibt's zu tun?</label>
+                    <textarea id="project-description" rows="4" placeholder="Beispiel: Ich habe 3 große Laubbäume im Garten, bei denen Totholz entfernt und die Äste entsorgt werden müssen..." class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 resize-none"></textarea>
+                    
+                    <button id="btn-estimate" onclick="generateEstimate()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl transition-all flex justify-center items-center gap-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        ✨ Projekt einschätzen lassen
+                    </button>
+                </div>
+
+                <!-- Lade-Indikator -->
+                <div id="estimate-loading" class="hidden mt-8 text-center py-8">
+                    <i data-lucide="loader-2" class="w-8 h-8 text-brand-500 animate-spin mx-auto mb-4"></i>
+                    <p class="text-gray-600 animate-pulse">Die KI analysiert Ihr Projekt und berechnet den Aufwand...</p>
+                </div>
+
+                <!-- Ergebnis-Bereich -->
+                <div id="estimate-result-container" class="hidden mt-8 pt-8 border-t border-gray-100">
+                    <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i data-lucide="bot" class="w-5 h-5 text-brand-500"></i> Einschätzung des Assistenten:
+                    </h4>
+                    <div id="estimate-result" class="prose prose-brand max-w-none text-gray-700 space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                        <!-- Ergebnis wird hier eingefügt -->
+                    </div>
+                    <p class="text-xs text-gray-400 mt-4 text-center">
+                        *Hinweis: Dies ist eine KI-generierte, völlig unverbindliche Schätzung. Ein exaktes Angebot erhalten Sie auf persönliche Anfrage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt Section -->
+    <section id="kontakt" class="py-20 bg-brand-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                
+                <!-- Kontakt Info -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">Lassen Sie uns zusammenarbeiten</h2>
+                    <div class="w-20 h-1 bg-brand-500 rounded-full mb-8"></div>
+                    <p class="text-gray-300 mb-8 text-lg">
+                        Egal ob der Garten zuwuchert, der Winter vor der Tür steht oder das Brennholz gespalten werden muss. Melden Sie sich einfach bei mir!
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Standort</p>
+                                <p class="font-medium text-lg">7532 Neuberg im Burgenland</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">Telefon</p>
+                                <p class="font-medium text-lg"><a href="tel:+43000000000" class="hover:text-green-400 transition-colors">+43 (0) XXX XXX XX XX</a></p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-brand-600 p-3 rounded-full text-brand-100">
+                                <i data-lucide="mail" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-400">E-Mail</p>
+                                <p class="font-medium text-lg"><a href="mailto:office@ifkovits-service.at" class="hover:text-green-400 transition-colors">office@ifkovits-service.at</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kontakt Formular (Note for Claude: Connect via Formspree or similar for GitHub Pages) -->
+                <div class="bg-white rounded-2xl p-8 shadow-2xl">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Schnelle Anfrage</h3>
+                    <!-- TODO für Claude: action URL mit Formspree oder Web3Forms Endpunkt austauschen -->
+                    <form action="#" method="POST" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Ihr Anliegen</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-4 rounded-lg transition-colors flex justify-center items-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i> Nachricht senden
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Impressum -->
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <span class="text-white font-bold text-lg block">Mario Ifkovits</span>
+                <span>Haus, Garten & Forstservice</span>
+            </div>
+            
+            <div class="text-center text-sm space-y-2">
+                <p><strong>Impressum:</strong> Mario Ifkovits | [Straße/Hausnummer] | 7532 Neuberg im Burgenland</p>
+                <p>Einzelunternehmer | Freies Gewerbe</p>
+                <p>USt-IdNr.: Befreit gem. § 6 Abs. 1 Z 27 UStG (Kleinunternehmer)</p>
+            </div>
+            
+            <div class="text-sm">
+            &copy; <span id="year"></span> Alle Rechte vorbehalten.
+        </div>
+    </div>
+</footer>
+
+<!-- Initialize Icons & Year -->
+<script>
+    lucide.createIcons();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Gemini API Integration: KI-Projekt-Schätzer ---
+    const apiKey = ""; // API-Schlüssel wird von der Umgebung bereitgestellt
+
+    // Hilfsfunktion: API Call mit Exponential Backoff (Retries bei Netzwerkproblemen)
+    async function fetchWithRetry(url, options, maxRetries = 5) {
+        const delays = [1000, 2000, 4000, 8000, 16000];
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (e) {
+                if (i === maxRetries - 1) throw e;
+                await new Promise(resolve => setTimeout(resolve, delays[i]));
+            }
+        }
+    }
+
+    async function generateEstimate() {
+        const descriptionInput = document.getElementById('project-description');
+        const description = descriptionInput.value.trim();
+        const btn = document.getElementById('btn-estimate');
+        const loading = document.getElementById('estimate-loading');
+        const resultContainer = document.getElementById('estimate-result-container');
+        const resultDiv = document.getElementById('estimate-result');
+
+        // Validierung: Ist das Textfeld leer?
+        if (!description) {
+            resultDiv.innerHTML = `<div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg flex items-center gap-2">Bitte beschreiben Sie Ihr Vorhaben kurz im Textfeld.</div>`;
+            resultContainer.classList.remove('hidden');
+            return;
+        }
+
+        // UI Zustand auf "Lädt" setzen
+        btn.disabled = true;
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        loading.classList.remove('hidden');
+        resultContainer.classList.add('hidden');
+        resultDiv.innerHTML = '';
+
+        // System-Prompt für die Gemini-KI (Instruktionen + Preise)
+        const systemPrompt = `Du bist der hilfreiche virtuelle Assistent von Mario Ifkovits (Haus, Garten & Forstservice in Neuberg im Burgenland). 
+Der Nutzer beschreibt ein Projekt, das er erledigt haben möchte. 
+Deine Aufgabe ist es, eine *grobe*, *unverbindliche* Aufwands- und Kostenschätzung abzugeben.
+Hier sind Marios Preise:
+- Standardarbeiten (ohne schwere Maschinen, z.B. rechen, jäten, einfache Reparaturen): 38 € / Stunde.
+- Arbeiten mit Kleinmaschinen (Motorsäge, Rasenmäher, Freischneider etc.): 48 € / Stunde.
+- Anfahrt: 0,42 € / km (innerhalb von Neuberg im Burgenland kostenlos).
+- Entsorgung: Nach Aufwand + Deponiegebühren.
+(MwSt. fällt wegen Kleinunternehmerregelung nicht an).
+
+Regeln für deine Antwort:
+1. Sei freundlich, professionell und nutze gerne einen leichten österreichischen Charme.
+2. Analysiere das Projekt und schätze realistisch, wie viele Stunden es dauern könnte (gib eine Spanne an, z.B. 3-5 Stunden).
+3. Nenne den zutreffenden Stundensatz und berechne die ungefähren Gesamtkosten (Spanne).
+4. Betone unbedingt, dass dies eine *unverbindliche KI-Schätzung* ist und die tatsächliche Zeit je nach Gegebenheiten vor Ort abweichen kann.
+5. Verweise am Ende freundlich darauf, dass der Nutzer für ein exaktes Angebot das Kontaktformular weiter unten auf der Website nutzen soll.
+6. Formatiere den Text mit einfachen HTML-Tags (<p>, <strong>, <ul>, <li>, <br>) für eine saubere Darstellung. Verwende kein Markdown.`;
+
+        const payload = {
+            contents: [{
+                parts: [{ text: description }]
+            }],
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            }
+        };
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        try {
+            const data = await fetchWithRetry(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                const answerText = data.candidates[0].content.parts[0].text;
+                resultDiv.innerHTML = answerText;
+                resultContainer.classList.remove('hidden');
+            } else {
+                throw new Error("Unerwartetes API-Antwortformat");
+            }
+        } catch (error) {
+            console.error("Fehler bei der Schätzung:", error);
+            resultDiv.innerHTML = `<div class="bg-red-50 text-red-700 p-4 rounded-lg">Es tut mir leid, bei der Einschätzung ist ein Netzwerkfehler aufgetreten. Bitte versuchen Sie es später noch einmal oder nutzen Sie direkt das Kontaktformular unten.</div>`;
+            resultContainer.classList.remove('hidden');
+        } finally {
+            // UI Zustand zurücksetzen
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            loading.classList.add('hidden');
+            lucide.createIcons(); // Icons neu laden falls welche generiert wurden
+        }
+    }
+</script>
+</body>
+</html>
