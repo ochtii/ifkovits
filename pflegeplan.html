@@ -33,7 +33,7 @@
         .prio-mittel { background: rgba(234,179,8,.15);  color: #fde68a; }
         .prio-niedrig{ background: rgba(82,169,137,.15); color: #7cc0a8; }
         /* Month scroll on mobile */
-        .months-scroll { overflow-x: auto; scrollbar-width: none; }
+        .months-scroll { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .months-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -110,7 +110,7 @@
 
             <!-- Month selector -->
             <div class="months-scroll mb-8">
-                <div id="month-tabs" class="flex gap-2 pb-2" style="min-width: max-content;"></div>
+                <div id="month-tabs" class="flex gap-2 pb-2 flex-nowrap w-max"></div>
             </div>
 
             <!-- Month content -->
