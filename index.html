@@ -327,28 +327,44 @@
                 <div class="bg-brand-700/60 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-brand-500/40">
                     <h3 class="text-2xl font-bold text-white mb-6">Schnelle Anfrage</h3>
                     <!-- TODO für Claude: action URL mit Formspree oder Web3Forms Endpunkt austauschen -->
-                    <form action="#" method="POST" class="space-y-4">
+                    <form id="contact-form" action="#" method="POST" class="space-y-4" novalidate>
+                        <!-- Honeypot: für Menschen unsichtbar, Bots füllen es aus -->
+                        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+                            <label for="website">Website leer lassen</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div>
                             <label for="name" class="block text-sm font-medium text-brand-200 mb-1">Name</label>
-                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
+                            <input type="text" id="name" name="name" required autocomplete="name" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-brand-200 mb-1">Telefon</label>
-                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
+                                <input type="tel" id="phone" name="phone" autocomplete="tel" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                             </div>
                             <div>
                                 <label for="email" class="block text-sm font-medium text-brand-200 mb-1">E-Mail</label>
-                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
+                                <input type="email" id="email" name="email" autocomplete="email" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
                             </div>
                         </div>
                         <div>
                             <label for="message" class="block text-sm font-medium text-brand-200 mb-1">Ihr Anliegen</label>
                             <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90 resize-none"></textarea>
                         </div>
+                        <!-- Mathe-CAPTCHA -->
+                        <div class="bg-brand-600/30 border border-brand-500/30 rounded-lg p-4">
+                            <label for="captcha-answer" class="block text-sm font-medium text-brand-200 mb-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 inline mr-1 text-brand-400"></i>Sicherheitsfrage: <span id="captcha-question" class="font-bold text-brand-300"></span>
+                            </label>
+                            <input type="number" id="captcha-answer" name="captcha-answer" required placeholder="Ihre Antwort" autocomplete="off" class="w-full px-4 py-2 border border-brand-500/40 rounded-lg focus:ring-2 focus:ring-brand-400 focus:border-brand-400 outline-none transition-all text-gray-900 bg-white/90">
+                            <p id="captcha-error" class="hidden mt-2 text-red-300 text-xs">Falsche Antwort – bitte nochmals versuchen.</p>
+                        </div>
                         <button type="submit" class="w-full bg-brand-400 hover:bg-brand-300 text-brand-900 font-bold py-3 px-4 rounded-lg transition-all flex justify-center items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             <i data-lucide="send" class="w-5 h-5"></i> Nachricht senden
                         </button>
+                        <div id="form-success" class="hidden bg-brand-600/50 border border-brand-400/40 rounded-lg p-4 text-center text-brand-100 text-sm">
+                            <i data-lucide="check-circle" class="w-5 h-5 inline mr-1 text-brand-400"></i>Danke! Ihre Nachricht wurde gesendet. Ich melde mich bald bei Ihnen.
+                        </div>
                     </form>
                 </div>
             </div>
@@ -425,6 +441,58 @@
     }
     
     lucide.createIcons();
+
+    // --- Mathe-CAPTCHA ---
+    let captchaAnswer = 0;
+    function initCaptcha() {
+        const a = Math.floor(Math.random() * 10) + 1;
+        const b = Math.floor(Math.random() * 10) + 1;
+        captchaAnswer = a + b;
+        const q = document.getElementById('captcha-question');
+        if (q) q.textContent = `${a} + ${b} = ?`;
+        const inp = document.getElementById('captcha-answer');
+        if (inp) inp.value = '';
+    }
+    initCaptcha();
+
+    // --- Kontaktformular Bot-Schutz + Submit ---
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 1) Honeypot prüfen
+            const honeypot = document.getElementById('website');
+            if (honeypot && honeypot.value !== '') {
+                // Bot erkannt – still ignorieren
+                return;
+            }
+
+            // 2) CAPTCHA prüfen
+            const userAnswer = parseInt(document.getElementById('captcha-answer').value, 10);
+            const captchaError = document.getElementById('captcha-error');
+            if (userAnswer !== captchaAnswer) {
+                captchaError.classList.remove('hidden');
+                initCaptcha();
+                lucide.createIcons();
+                return;
+            }
+            captchaError.classList.add('hidden');
+
+            // 3) Formular absenden (aktuell: action="#" – bei Formspree-Integration hier fetch)
+            // contactForm.submit(); // aktivieren wenn action-URL gesetzt
+
+            // Erfolgsmeldung anzeigen & Formular zurücksetzen
+            contactForm.reset();
+            initCaptcha();
+            const successMsg = document.getElementById('form-success');
+            if (successMsg) {
+                successMsg.classList.remove('hidden');
+                setTimeout(() => successMsg.classList.add('hidden'), 6000);
+            }
+            lucide.createIcons();
+        });
+    }
 
     // --- KI-Projekt-Schätzer (Pollinations AI – kostenlos, kein API-Key nötig) ---
     async function generateEstimate() {
