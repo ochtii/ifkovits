@@ -327,7 +327,7 @@
                 <div class="bg-brand-700/60 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-brand-500/40">
                     <h3 class="text-2xl font-bold text-white mb-6">Schnelle Anfrage</h3>
                     <!-- TODO für Claude: action URL mit Formspree oder Web3Forms Endpunkt austauschen -->
-                    <form id="contact-form" action="#" method="POST" class="space-y-4" novalidate>
+                    <form id="contact-form" action="https://formspree.io/f/xeervago" method="POST" class="space-y-4" novalidate>
                         <!-- Honeypot: für Menschen unsichtbar, Bots füllen es aus -->
                         <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
                             <label for="website">Website leer lassen</label>
@@ -479,18 +479,30 @@
             }
             captchaError.classList.add('hidden');
 
-            // 3) Formular absenden (aktuell: action="#" – bei Formspree-Integration hier fetch)
-            // contactForm.submit(); // aktivieren wenn action-URL gesetzt
+            // 3) Formular per fetch an Formspree senden
+            const formData = new FormData(contactForm);
+            formData.delete('captcha-answer'); // CAPTCHA nicht mitsenden
 
-            // Erfolgsmeldung anzeigen & Formular zurücksetzen
-            contactForm.reset();
-            initCaptcha();
-            const successMsg = document.getElementById('form-success');
-            if (successMsg) {
-                successMsg.classList.remove('hidden');
-                setTimeout(() => successMsg.classList.add('hidden'), 6000);
-            }
-            lucide.createIcons();
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    contactForm.reset();
+                    initCaptcha();
+                    const successMsg = document.getElementById('form-success');
+                    if (successMsg) {
+                        successMsg.classList.remove('hidden');
+                        setTimeout(() => successMsg.classList.add('hidden'), 8000);
+                    }
+                } else {
+                    alert('Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.');
+                }
+                lucide.createIcons();
+            }).catch(() => {
+                alert('Keine Verbindung. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
+            });
         });
     }
 
