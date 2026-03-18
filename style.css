@@ -35,6 +35,37 @@ html { scroll-padding-top: 5rem; }
 }
 .footer-link:hover::after { width: 100%; }
 
+/* -- PLZ Autocomplete ------------------------------------ */
+.plz-dropdown {
+    position: absolute;
+    left: 0; right: 0;
+    top: calc(100% + 2px);
+    background: #0f472d;
+    border: 1px solid rgba(82,169,137,.4);
+    border-radius: 0.5rem;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.plz-dropdown li {
+    padding: .5rem .85rem;
+    cursor: pointer;
+    font-size: .875rem;
+    color: #d4e9e1;
+    display: flex;
+    gap: .6rem;
+    align-items: baseline;
+}
+.plz-dropdown li:hover,
+.plz-dropdown li.active { background: rgba(82,169,137,.2); color: #fff; }
+.plz-dropdown li .plz-code { font-weight: 700; color: #7cc0a8; flex-shrink: 0; }
+.plz-dropdown li .plz-city { color: #d4e9e1; }
+
+/* -- Form field error state ------------------------------ */
+.field-error { border-color: #f87171 !important; }
+.field-err-msg { color: #fca5a5; font-size: .75rem; margin-top: .25rem; }
+
 /* -- Impressum page prose -------------------------------- */
 .impressum-prose h2 {
     font-size: 1.25rem;
