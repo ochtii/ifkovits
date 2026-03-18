@@ -434,26 +434,7 @@
     
     lucide.createIcons();
 
-    // --- Gemini API Integration: KI-Projekt-Schätzer ---
-    const apiKey = 'AIzaSyAXlVb-_kar0V7gU3yTGJ_1nwJfrZ16Xm4'; // Gemini API Key
-
-    // Hilfsfunktion: API Call mit Exponential Backoff (Retries bei Netzwerkproblemen)
-    async function fetchWithRetry(url, options, maxRetries = 5) {
-        const delays = [1000, 2000, 4000, 8000, 16000];
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(url, options);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return await response.json();
-            } catch (e) {
-                if (i === maxRetries - 1) throw e;
-                await new Promise(resolve => setTimeout(resolve, delays[i]));
-            }
-        }
-    }
-
+    // --- KI-Projekt-Schätzer (Pollinations AI – kostenlos, kein API-Key nötig) ---
     async function generateEstimate() {
         const descriptionInput = document.getElementById('project-description');
         const description = descriptionInput.value.trim();
@@ -462,76 +443,57 @@
         const resultContainer = document.getElementById('estimate-result-container');
         const resultDiv = document.getElementById('estimate-result');
 
-        // Validierung: Ist das Textfeld leer?
         if (!description) {
-            resultDiv.innerHTML = `<div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg flex items-center gap-2">Bitte beschreiben Sie Ihr Vorhaben kurz im Textfeld.</div>`;
+            resultDiv.innerHTML = `<div class="bg-yellow-50 text-yellow-800 p-4 rounded-lg">Bitte beschreiben Sie Ihr Vorhaben kurz im Textfeld.</div>`;
             resultContainer.classList.remove('hidden');
             return;
         }
 
-        // UI Zustand auf "Lädt" setzen
         btn.disabled = true;
         btn.classList.add('opacity-75', 'cursor-not-allowed');
         loading.classList.remove('hidden');
         resultContainer.classList.add('hidden');
         resultDiv.innerHTML = '';
 
-        // System-Prompt für die Gemini-KI (Instruktionen + Preise)
-        const systemPrompt = `Du bist der hilfreiche virtuelle Assistent von Mario Ifkovits (Haus, Garten & Forstservice in Neuberg im Burgenland). 
-Der Nutzer beschreibt ein Projekt, das er erledigt haben möchte. 
-Deine Aufgabe ist es, eine *grobe*, *unverbindliche* Aufwands- und Kostenschätzung abzugeben.
-Hier sind Marios Preise:
-- Standardarbeiten (ohne schwere Maschinen, z.B. rechen, jäten, einfache Reparaturen): 39,90 € / Stunde.
+        const systemPrompt = `Du bist der hilfreiche virtuelle Assistent von Mario Ifkovits (Haus, Garten & Forstservice in Neuberg im Burgenland).
+Der Nutzer beschreibt ein Projekt, das er erledigt haben möchte.
+Deine Aufgabe ist es, eine grobe, unverbindliche Aufwands- und Kostenschätzung abzugeben.
+Marios Preise:
+- Standardarbeiten (ohne Maschinen, z.B. rechen, jäten, einfache Reparaturen): 39,90 € / Stunde.
 - Arbeiten mit Kleinmaschinen (Motorsäge, Rasenmäher, Freischneider etc.): 50,40 € / Stunde.
 - Anfahrt: 0,44 € / km (innerhalb von Neuberg im Burgenland kostenlos).
-- Entsorgung: Nach Aufwand + Deponiegebühren.
-(MwSt. fällt wegen Kleinunternehmerregelung nicht an).
-
-Regeln für deine Antwort:
-1. Sei freundlich, professionell und nutze gerne einen leichten österreichischen Charme.
-2. Analysiere das Projekt und schätze realistisch, wie viele Stunden es dauern könnte (gib eine Spanne an, z.B. 3-5 Stunden).
-3. Nenne den zutreffenden Stundensatz und berechne die ungefähren Gesamtkosten (Spanne).
-4. Betone unbedingt, dass dies eine *unverbindliche KI-Schätzung* ist und die tatsächliche Zeit je nach Gegebenheiten vor Ort abweichen kann.
-5. Verweise am Ende freundlich darauf, dass der Nutzer für ein exaktes Angebot das Kontaktformular weiter unten auf der Website nutzen soll.
-6. Formatiere den Text mit einfachen HTML-Tags (<p>, <strong>, <ul>, <li>, <br>) für eine saubere Darstellung. Verwende kein Markdown.`;
+- Entsorgung: Nach Aufwand + Deponiegebühren. (Keine MwSt. – Kleinunternehmer).
+Regeln: Sei freundlich mit leichtem österreichischen Charme. Schätze Stunden als Spanne (z.B. 2-4 Std.), berechne Gesamtkosten. Betone dass es eine unverbindliche KI-Schätzung ist. Verweise auf das Kontaktformular für ein genaues Angebot. Antworte NUR mit HTML-Tags (<p>, <strong>, <ul>, <li>), kein Markdown.`;
 
         const payload = {
-            contents: [{
-                parts: [{ text: description }]
-            }],
-            systemInstruction: {
-                parts: [{ text: systemPrompt }]
-            }
+            model: 'openai',
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: description }
+            ],
+            seed: Math.floor(Math.random() * 10000)
         };
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
-
         try {
-            const data = await fetchWithRetry(url, {
+            const response = await fetch('https://text.pollinations.ai/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const answerText = data.candidates[0].content.parts[0].text;
-                resultDiv.innerHTML = answerText;
-                resultContainer.classList.remove('hidden');
-            } else {
-                throw new Error("Unerwartetes API-Antwortformat");
-            }
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const answerText = await response.text();
+            resultDiv.innerHTML = answerText;
+            resultContainer.classList.remove('hidden');
         } catch (error) {
-            console.error("Fehler bei der Schätzung:", error);
-            resultDiv.innerHTML = `<div class="bg-red-50 text-red-700 p-4 rounded-lg">Es tut mir leid, bei der Einschätzung ist ein Netzwerkfehler aufgetreten. Bitte versuchen Sie es später noch einmal oder nutzen Sie direkt das Kontaktformular unten.</div>`;
+            console.error('Fehler bei der Schätzung:', error);
+            resultDiv.innerHTML = `<div class="bg-red-50 text-red-700 p-4 rounded-lg">Es tut mir leid, bei der Einschätzung ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder nutzen Sie direkt das Kontaktformular unten.</div>`;
             resultContainer.classList.remove('hidden');
         } finally {
-            // UI Zustand zurücksetzen
             btn.disabled = false;
             btn.classList.remove('opacity-75', 'cursor-not-allowed');
             loading.classList.add('hidden');
-            lucide.createIcons(); // Icons neu laden falls welche generiert wurden
         }
     }
 </script>
