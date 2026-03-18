@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="de-AT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haus & Garten Pflegeplan | Mario Ifkovits</title>
+    <meta name="description" content="Interaktiver Jahres-Pflegeplan für Haus und Garten: Alle wichtigen Arbeiten zur richtigen Zeit – von Jänner bis Dezember.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        .month-btn { transition: all .2s ease; }
+        .month-btn.active { background: #2d8659; color: #fff; box-shadow: 0 4px 14px rgba(45,134,89,.4); }
+        .month-btn:not(.active):hover { background: rgba(45,134,89,.2); }
+        .task-card { animation: fadeSlide .25s ease both; }
+        @keyframes fadeSlide { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+        .cat-garten  { border-left: 3px solid #52a989; }
+        .cat-haus    { border-left: 3px solid #60a5fa; }
+        .cat-holz    { border-left: 3px solid #f59e0b; }
+        .cat-winter  { border-left: 3px solid #7dd3fc; }
+        .prio-hoch   { background: rgba(239,68,68,.15); color: #fca5a5; }
+        .prio-mittel { background: rgba(234,179,8,.15);  color: #fde68a; }
+        .prio-niedrig{ background: rgba(82,169,137,.15); color: #7cc0a8; }
+        /* Month scroll on mobile */
+        .months-scroll { overflow-x: auto; scrollbar-width: none; }
+        .months-scroll::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="text-gray-900 font-sans antialiased flex flex-col min-h-screen relative">
+
+    <!-- Hintergrund -->
+    <div class="fixed inset-0 z-[-1]">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-brand-900/85 backdrop-blur-[2px]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-brand-800/90 backdrop-blur-md shadow-lg z-50 transition-all border-b border-brand-600/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="bg-brand-400 p-2 rounded-lg text-brand-900">
+                        <i data-lucide="trees" class="w-6 h-6"></i>
+                    </div>
+                    <a href="index.html" class="font-bold text-xl md:text-2xl text-white tracking-tight">
+                        Mario Ifkovits<span class="block text-xs text-brand-300 font-medium uppercase tracking-wider">Haus, Garten & Holzarbeiten</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#leistungen" class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Leistungen</a>
+                    <a href="index.html#preise"     class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Preise</a>
+                    <a href="index.html#ki-schaetzer" class="text-brand-400 hover:text-brand-300 font-medium transition-colors">✨ KI-Schätzer</a>
+                    <a href="index.html#kontakt"    class="text-brand-100 hover:text-brand-400 font-medium transition-colors">Kontakt</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-100 hover:text-brand-400 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed top-20 left-0 right-0 bg-brand-800/95 backdrop-blur-md border-b border-brand-600/50 z-40 md:hidden shadow-lg">
+        <div class="px-4 py-4 space-y-2">
+            <a href="index.html#leistungen"  class="block px-4 py-2 text-brand-100 hover:bg-brand-700/50 rounded-lg hover:text-brand-400 font-medium transition-all">Leistungen</a>
+            <a href="index.html#preise"      class="block px-4 py-2 text-brand-100 hover:bg-brand-700/50 rounded-lg hover:text-brand-400 font-medium transition-all">Preise</a>
+            <a href="index.html#ki-schaetzer" class="block px-4 py-2 text-brand-400 hover:bg-brand-700/50 rounded-lg hover:text-brand-300 font-medium transition-all">✨ KI-Schätzer</a>
+            <a href="index.html#kontakt"     class="block px-4 py-2 text-brand-100 hover:bg-brand-700/50 rounded-lg hover:text-brand-400 font-medium transition-all">Kontakt</a>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="flex-grow pt-28 pb-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Breadcrumb -->
+            <nav class="mb-6 text-sm text-brand-300">
+                <a href="index.html" class="hover:text-brand-400 transition-colors">Startseite</a>
+                <span class="mx-2">/</span>
+                <span class="text-brand-100">Haus & Garten Pflegeplan</span>
+            </nav>
+
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-brand-500/20 text-brand-300 border border-brand-400/30 text-xs font-semibold tracking-wider uppercase mb-4">Jahresübersicht</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Haus & Garten Pflegeplan</h1>
+                <p class="text-brand-200 max-w-xl mx-auto text-sm md:text-base">Alle wichtigen Arbeiten zur richtigen Jahreszeit – die aktuelle Monat ist automatisch ausgewählt.</p>
+            </div>
+
+            <!-- Season legend -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8 text-xs">
+                <span class="flex items-center gap-1.5 bg-sky-900/40 text-sky-300 border border-sky-700/40 rounded-full px-3 py-1"><i data-lucide="snowflake" class="w-3 h-3"></i> Winter</span>
+                <span class="flex items-center gap-1.5 bg-emerald-900/40 text-emerald-300 border border-emerald-700/40 rounded-full px-3 py-1"><i data-lucide="flower-2" class="w-3 h-3"></i> Frühling</span>
+                <span class="flex items-center gap-1.5 bg-yellow-900/40 text-yellow-300 border border-yellow-700/40 rounded-full px-3 py-1"><i data-lucide="sun" class="w-3 h-3"></i> Sommer</span>
+                <span class="flex items-center gap-1.5 bg-amber-900/40 text-amber-300 border border-amber-700/40 rounded-full px-3 py-1"><i data-lucide="leaf" class="w-3 h-3"></i> Herbst</span>
+            </div>
+
+            <!-- Month selector -->
+            <div class="months-scroll mb-8">
+                <div id="month-tabs" class="flex gap-2 pb-2" style="min-width: max-content;"></div>
+            </div>
+
+            <!-- Month content -->
+            <div id="month-content"></div>
+
+            <!-- Category legend -->
+            <div class="mt-10 flex flex-wrap gap-4 justify-center text-xs">
+                <span class="flex items-center gap-2 text-brand-200"><span class="w-4 h-1 rounded bg-brand-400 block"></span>Garten</span>
+                <span class="flex items-center gap-2 text-brand-200"><span class="w-4 h-1 rounded bg-blue-400 block"></span>Haus</span>
+                <span class="flex items-center gap-2 text-brand-200"><span class="w-4 h-1 rounded bg-amber-400 block"></span>Holz</span>
+                <span class="flex items-center gap-2 text-brand-200"><span class="w-4 h-1 rounded bg-sky-300 block"></span>Winterdienst</span>
+            </div>
+
+            <!-- CTA -->
+            <div class="mt-12 text-center bg-brand-700/40 backdrop-blur-md rounded-2xl p-8 border border-brand-500/30 shadow-xl">
+                <i data-lucide="calendar-check" class="w-10 h-10 text-brand-400 mx-auto mb-4"></i>
+                <h2 class="text-xl font-bold text-white mb-2">Einen Termin anfragen</h2>
+                <p class="text-brand-200 text-sm mb-5 max-w-md mx-auto">Soll Mario die Arbeit für Sie übernehmen? Einfach anfragen – faire Preise, verlässliche Ausführung.</p>
+                <a href="index.html#kontakt" class="inline-flex items-center gap-2 bg-brand-400 hover:bg-brand-300 text-brand-900 font-bold py-3 px-8 rounded-lg shadow-lg shadow-brand-400/30 transition-all transform hover:-translate-y-0.5">
+                    <i data-lucide="send" class="w-4 h-4"></i> Jetzt anfragen
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 border-t border-brand-700/50 text-brand-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="bg-brand-400 p-2 rounded-lg text-brand-900"><i data-lucide="trees" class="w-5 h-5"></i></div>
+                    <span class="font-bold text-white text-lg">Mario Ifkovits</span>
+                </div>
+                <p class="text-brand-200 text-sm leading-relaxed">Verlässlicher Service für Haus, Garten & Holzarbeiten in Neuberg im Burgenland.</p>
+                <p class="text-brand-300 text-xs mt-3">Freies Gewerbe · Kleinunternehmer gem. § 6 Abs. 1 Z 27 UStG</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Navigation</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html#leistungen" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Leistungen</a></li>
+                    <li><a href="index.html#preise"     class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Preise</a></li>
+                    <li><a href="index.html#ki-schaetzer" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">✨ KI-Schätzer</a></li>
+                    <li><a href="index.html#kontakt"    class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Kontakt</a></li>
+                    <li><a href="pflegeplan.html"       class="footer-link text-brand-300 hover:text-brand-400 transition-colors">📅 Pflegeplan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Kontakt</h4>
+                <address class="not-italic text-sm space-y-2 text-brand-200">
+                    <p>Untere Hauptstraße 35<br>7537 Neuberg im Burgenland</p>
+                    <p><a href="tel:+43000000000" class="footer-link hover:text-brand-400 transition-colors">+43 (0) XXX XXX XX XX</a></p>
+                    <p><a href="mailto:office@ifkovits-service.at" class="footer-link hover:text-brand-400 transition-colors">office@ifkovits-service.at</a></p>
+                </address>
+            </div>
+        </div>
+        <div class="border-t border-brand-700/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-brand-300">
+                <p>&copy; <span id="year"></span> Mario Ifkovits. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-5">
+                    <a href="impressum.html" class="hover:text-brand-400 transition-colors">Impressum & Datenschutz</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>
+// ── Mobile menu ──────────────────────────────────────────────────────────────
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu    = document.getElementById('mobile-menu');
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+}
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+const MONTHS = [
+  {
+    name: 'Jänner', short: 'Jän', season: 'Winter', seasonIcon: 'snowflake', seasonColor: 'sky',
+    tip: 'Streumittel immer griffbereit halten – Glätte kann schnell entstehen. Die Verkehrssicherungspflicht gilt auch für private Zugänge.',
+    tasks: [
+      { cat: 'winter', title: 'Schneeräumen & Streuen', desc: 'Gehwege, Einfahrt und Hauszugänge täglich kontrollieren und bei Bedarf räumen. Verkehrssicherungspflicht gilt auch für private Wege.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Brennholzvorrat prüfen', desc: 'Lager kontrollieren – bei Bedarf Holz nachsägen und spalten lassen, bevor der Vorrat ausgeht.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Dach & Eiszapfen kontrollieren', desc: 'Schneelast auf Carports, Vordächern und Flachdächern beobachten. Gefährliche Eiszapfen von Dachtraufen entfernen.', prio: 'mittel' },
+      { cat: 'garten', title: 'Gartensaison planen', desc: 'Ruhezeit nutzen: Welche Flächen sollen dieses Jahr gepflegt werden? Regelmäßige Pflegetermine rechtzeitig anfragen.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'Februar', short: 'Feb', season: 'Winter', seasonIcon: 'snowflake', seasonColor: 'sky',
+    tip: 'Bei längeren frostfreien Perioden über 0 °C können Obstbäume und Kletterrosen bereits geschnitten werden.',
+    tasks: [
+      { cat: 'winter', title: 'Schneeräumen & Streuen', desc: 'Februar bringt oft noch Schneeperioden – Räumgeräte und Streugut weiter bereit halten.', prio: 'hoch' },
+      { cat: 'garten', title: 'Obstbaumschnitt (bei Frostfreiheit)', desc: 'Bei Temperaturen über 0 °C Obstbäume und Kletterrosen zurückschneiden – fördert kräftigen Austrieb.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Gartengeräte warten & schärfen', desc: 'Rasenmäher, Heckenschere und Freischneider für die Saison vorbereiten, Klingen nachschärfen, Öl wechseln.', prio: 'mittel' },
+      { cat: 'garten', title: 'Frühjahrsplanung abschließen', desc: 'Düngemittel und Material rechtzeitig besorgen. Regelmäßige Rasenpflege-Termine für die Saison anfragen.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'März', short: 'Mär', season: 'Frühling', seasonIcon: 'flower-2', seasonColor: 'emerald',
+    tip: 'Der erste Rasenschnitt nicht zu kurz: 5–6 cm Schnitthöhe schützt den noch empfindlichen Winterrasen.',
+    tasks: [
+      { cat: 'garten', title: 'Gartenaufräumen nach dem Winter', desc: 'Winterlaub und abgestorbene Stauden entfernen, Beete freimachen und Gartenabfälle entsorgen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Rasenmäher-Service & erster Schnitt', desc: 'Rasenmäher auf Betrieb prüfen. Erste Mahd ab ca. Mitte März – Schnitthöhe 5–6 cm, nicht kürzer.', prio: 'hoch' },
+      { cat: 'garten', title: 'Hecken Frühjahrs-Formschnitt', desc: 'Immergrüne Hecken (Thuja, Liguster, Buchs) können jetzt in Form gebracht werden.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Zäune & Einfriedungen prüfen', desc: 'Winterschäden kontrollieren, lose Bretter befestigen, Holz bei Bedarf streichen oder ölen.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Terrasse & Wege von Winterschmutz befreien', desc: 'Terrassenplatten, Gehwege und Einfahrten reinigen. Fugen auf Schäden kontrollieren.', prio: 'mittel' },
+    ]
+  },
+  {
+    name: 'April', short: 'Apr', season: 'Frühling', seasonIcon: 'flower-2', seasonColor: 'emerald',
+    tip: 'April – stärkstes Wachstum! Der Rasen wächst jetzt rasant. Wöchentliches Mähen zahlt sich aus und hält den Rasen dicht.',
+    tasks: [
+      { cat: 'garten', title: 'Wöchentliches Rasenmähen', desc: 'Mit dem Husqvarna Knicklenker (103 cm Schnittbreite) werden auch große Flächen schnell und effizient gemäht.', prio: 'hoch' },
+      { cat: 'garten', title: 'Unkraut jäten', desc: 'Früh jäten verhindert Samenbildung – Beete und Rasenkanten regelmäßig sauber halten.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Regenrinnen reinigen', desc: 'Winterrückstände (Laub, Schmutz) aus Dachrinnen entfernen – vor der Regenperiode wichtig.', prio: 'mittel' },
+      { cat: 'garten', title: 'Beete anlegen & vorbereiten', desc: 'Erde lockern, kompostieren und Pflanzflächen für Sommerflor vorbereiten.', prio: 'mittel' },
+      { cat: 'garten', title: 'Grünschnitt-Entsorgung', desc: 'Abfälle aus Frühjahrsreinigung gesammelt zur Deponie bringen.', prio: 'mittel' },
+    ]
+  },
+  {
+    name: 'Mai', short: 'Mai', season: 'Frühling', seasonIcon: 'flower-2', seasonColor: 'emerald',
+    tip: 'Nach der Blüte von Forsythie, Flieder und Ziersträuchern ist jetzt der ideale Zeitpunkt für den Rückschnitt.',
+    tasks: [
+      { cat: 'garten', title: 'Rasenmähen 1–2× pro Woche', desc: 'Intensivstes Wachstum des Jahres – häufiges Mähen hält den Rasen dicht, gesund und unkrautfrei.', prio: 'hoch' },
+      { cat: 'garten', title: 'Hecken 1. Schnitt', desc: 'Hecken nach Abschluss des Frühjahrs-Triebs in Form schneiden. Grünschnitt fachgerecht entsorgen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Ziersträucher nach der Blüte schneiden', desc: 'Forsythie, Flieder, Zierkirsche und Blutjohannisbeere nach der Blüte auslichten.', prio: 'mittel' },
+      { cat: 'garten', title: 'Rasenkanten mit Freischneider', desc: 'Saubere Kanten entlang Beeten, Wegen und Zäunen verleihen dem Garten ein gepflegtes Bild.', prio: 'mittel' },
+      { cat: 'holz',   title: 'Holzterrassen & Zäune ölen/streichen', desc: 'Trockenes Frühjahrswetter nutzen, um Holzflächen mit Öl oder Lasur zu schützen.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'Juni', short: 'Jun', season: 'Sommer', seasonIcon: 'sun', seasonColor: 'yellow',
+    tip: 'Im Juni beginnt die Hochsaison. Rasenschnitthöhe bei 4–5 cm halten – tieferes Schneiden stresst die Gräser.',
+    tasks: [
+      { cat: 'garten', title: 'Intensiv-Rasenmähen (wöchentlich)', desc: 'Gleichmäßige Schnitthöhe einhalten – nie mehr als 1/3 der Halmlänge auf einmal entfernen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Freischneider an allen Rändern', desc: 'Saubere Kanten entlang Beeten, Mauern, Wegen und Zäunen mit dem Freischneider nacharbeiten.', prio: 'mittel' },
+      { cat: 'garten', title: 'Grünschnitt-Entsorgung', desc: 'Mähgut und Schnittgut regelmäßig entsorgen – kein Aushäufen im Garten.', prio: 'mittel' },
+      { cat: 'garten', title: 'Unkraut jäten (Hauptsaison)', desc: 'Beete und Pflasterflächen konsequent von Unkraut freihalten.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Außenfarbe & Holzschutz erneuern', desc: 'Warmes, trockenes Wetter: Zäune, Tore und Holzfassaden streichen oder ölen.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'Juli', short: 'Jul', season: 'Sommer', seasonIcon: 'sun', seasonColor: 'yellow',
+    tip: 'Bei anhaltender Trockenheit die Schnitthöhe auf 6–7 cm erhöhen – das schützt den Boden vor Austrocknung.',
+    tasks: [
+      { cat: 'garten', title: 'Rasenmähen 1–2× pro Woche', desc: 'Bei Hitze den Schnitttermin auf früh morgens verlegen. Bei Trockenheit Schnitthöhe erhöhen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Hecken 2. Schnitt', desc: 'Sommerlicher Nachschnitt hält Hecken bis in den Herbst in gepflegter Form.', prio: 'hoch' },
+      { cat: 'garten', title: 'Grünschnitt entsorgen', desc: 'Schnittgut von Hecken und Sträuchern fachgerecht zur Deponie bringen.', prio: 'mittel' },
+      { cat: 'holz',   title: 'Brennholz sägen & spalten', desc: 'Jetzt gespaltenes Holz hat bis Oktober Zeit zu trocknen – optimale Heizqualität im Winter.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Terrassenreinigung', desc: 'Algen und Grünbelag auf Terrassenplatten und Gehwegen beseitigen – Rutschgefahr vermeiden.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'August', short: 'Aug', season: 'Sommer', seasonIcon: 'sun', seasonColor: 'yellow',
+    tip: 'Letzter sinnvoller Sommer-Heckenschnitt bis Ende August. Danach möglichst keine Heckenschnitte mehr bis zum Frühjahr.',
+    tasks: [
+      { cat: 'garten', title: 'Rasenmähen (wöchentlich)', desc: 'Gegen Ende August beginnt das Wachstum nachzulassen – Mähabstände können etwas größer werden.', prio: 'hoch' },
+      { cat: 'garten', title: 'Letzter Sommer-Heckenschnitt', desc: 'Spätestens bis Ende August – danach keine Heckenschnitte mehr, damit neues Triebwerk nicht erfrierende.', prio: 'hoch' },
+      { cat: 'holz',   title: 'Brennholzsaison intensivieren', desc: 'Letzte gute Gelegenheit: Holz spalten und ordentlich stapeln, damit es bis Winter gut trocknet.', prio: 'mittel' },
+      { cat: 'garten', title: 'Gartengeräte pflegen', desc: 'Klingen reinigen und ölen, Freischneider-Faden kontrollieren und nachfüllen.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Außenfarben & Reparaturen', desc: 'Restliche Malerarbeiten und kleine Reparaturen vor dem Herbst abschließen.', prio: 'niedrig' },
+    ]
+  },
+  {
+    name: 'September', short: 'Sep', season: 'Herbst', seasonIcon: 'leaf', seasonColor: 'amber',
+    tip: 'Rasen jetzt vertikutieren und mit Herbstdünger versorgen – das stärkt die Wurzeln und beugt Moosbefall vor.',
+    tasks: [
+      { cat: 'garten', title: 'Rasen vertikutieren', desc: 'Filz auskämmen und Boden auflockern – beste Zeit ist Anfang September, solange es noch warm genug ist.', prio: 'hoch' },
+      { cat: 'garten', title: 'Herbstdüngung Rasen', desc: 'Kaliumreicher Herbstdünger stärkt die Gräser und macht den Rasen widerstandsfähig gegen Winter.', prio: 'hoch' },
+      { cat: 'garten', title: 'Laub rechen (Beginn)', desc: 'Erste Laubmengen regelmäßig einsammeln – fördert Rasengesundheit und verhindert Faulstellen.', prio: 'mittel' },
+      { cat: 'holz',   title: 'Brennholz fertig stapeln', desc: 'Holzlager abschließen und mit einer wasserfesten Abdeckung sichern.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Winterdienst vorbereiten', desc: 'Schneeschaufel, Streumittel und Frostschutz aus dem Lager holen und kontrollieren.', prio: 'mittel' },
+    ]
+  },
+  {
+    name: 'Oktober', short: 'Okt', season: 'Herbst', seasonIcon: 'leaf', seasonColor: 'amber',
+    tip: 'Nasses Laub auf Wegen und Einfahrten wird schnell rutschig – regelmäßige Laubräumung schützt vor Unfällen.',
+    tasks: [
+      { cat: 'garten', title: 'Laubentsorgung (Hauptsaison)', desc: 'Rasen, Wege und Einfahrten regelmäßig von Laub befreien. Grünabfall fachgerecht entsorgen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Letzter Rasenschnitt der Saison', desc: 'Bei ca. 5 cm Wachstum noch mähen – Rasen sollte mit etwa 5 cm Höhe in den Winter gehen.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Regenrinnen vor Winter reinigen', desc: 'Laubverstopfungen unbedingt beseitigen – verstopfte Rinnen können bei Frost platzen und teuren Schaden verursachen.', prio: 'hoch' },
+      { cat: 'garten', title: 'Gartenmöbel & Pflanzgefäße einräumen', desc: 'Terrassenmöbel, Kübelpflanzen und Töpfe vor Frost schützen und trocken einlagern.', prio: 'mittel' },
+      { cat: 'garten', title: 'Stauden & Beete für Winter vorbereiten', desc: 'Verblühte Stauden zurückschneiden, empfindliche Pflanzen mit Mulch abdecken.', prio: 'mittel' },
+    ]
+  },
+  {
+    name: 'November', short: 'Nov', season: 'Herbst', seasonIcon: 'leaf', seasonColor: 'amber',
+    tip: 'Jetzt Rasenmäher, Freischneider und Motorsäge für den Winter vorbereiten: Kraftstoff ablassen, Messer reinigen und einölen.',
+    tasks: [
+      { cat: 'garten', title: 'Laubreste aufräumen & entsorgen', desc: 'Letztes Laub einsammeln und entsorgen, bevor die Nächte dauerhaft frostig werden.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Gartengeräte einwintern', desc: 'Kraftstoff ablassen (oder Stabilisator), Messer reinigen, Geräte trocken und sicher lagern.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Außenwasserleitungen absperren & entleeren', desc: 'Gartenwasseranschlüsse absperren und Leitungen entleeren – wichtiger Frostschutz!', prio: 'hoch' },
+      { cat: 'haus',   title: 'Schneeschieber & Streumittel bereitstellen', desc: 'Winterdienst-Equipment an einem griffbereiten Platz deponieren.', prio: 'mittel' },
+      { cat: 'holz',   title: 'Brennholzlager kontrollieren', desc: 'Wintervorrat prüfen – ausreichend für die gesamte Heizsaison? Ggf. nachbestellen.', prio: 'mittel' },
+    ]
+  },
+  {
+    name: 'Dezember', short: 'Dez', season: 'Winter', seasonIcon: 'snowflake', seasonColor: 'sky',
+    tip: 'Der Dezember ist die Zeit für Jahresrückblick und Planung: Regelmäßige Pflegetermine für das nächste Jahr jetzt anfragen.',
+    tasks: [
+      { cat: 'winter', title: 'Winterdienst (bei Bedarf)', desc: 'Schnell und zuverlässig: Gehwege, Einfahrt und Zugänge unverzüglich schnee- und eisfrei halten.', prio: 'hoch' },
+      { cat: 'haus',   title: 'Brennholz & Heizung im Blick behalten', desc: 'Holzvorrat beobachten – rechtzeitig nachsägen und spalten lassen, bevor der Vorrat knapp wird.', prio: 'mittel' },
+      { cat: 'haus',   title: 'Hausfassade & Dach nach Frost kontrollieren', desc: 'Fassadenrisse, undichte Stellen und Dachschäden nach ersten starken Frösten prüfen.', prio: 'mittel' },
+      { cat: 'garten', title: 'Saison-Planung für das neue Jahr', desc: 'Regelmäßige Pflegeverträge für nächsten Frühling und Sommer jetzt anfragen – Termine sichern!', prio: 'niedrig' },
+    ]
+  },
+];
+
+// ── Category helpers ─────────────────────────────────────────────────────────
+const CAT = {
+    garten: { label: 'Garten',       icon: 'leaf',      cls: 'cat-garten',  iconCls: 'text-brand-400' },
+    haus:   { label: 'Haus',         icon: 'home',      cls: 'cat-haus',    iconCls: 'text-blue-400'  },
+    holz:   { label: 'Holz',         icon: 'axe',       cls: 'cat-holz',    iconCls: 'text-amber-400' },
+    winter: { label: 'Winterdienst', icon: 'snowflake', cls: 'cat-winter',  iconCls: 'text-sky-300'   },
+};
+
+const SEASON_BG = {
+    sky:     'bg-sky-900/30 border-sky-700/40 text-sky-300',
+    emerald: 'bg-emerald-900/30 border-emerald-700/40 text-emerald-300',
+    yellow:  'bg-yellow-900/30 border-yellow-700/40 text-yellow-300',
+    amber:   'bg-amber-900/30 border-amber-700/40 text-amber-300',
+};
+
+// ── Render ───────────────────────────────────────────────────────────────────
+const tabContainer     = document.getElementById('month-tabs');
+const contentContainer = document.getElementById('month-content');
+const currentMonth     = new Date().getMonth(); // 0-based
+
+function renderTabs() {
+    MONTHS.forEach((m, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'month-btn px-4 py-2 rounded-lg text-sm font-medium border border-brand-500/30 text-brand-200 whitespace-nowrap';
+        if (i === currentMonth) btn.classList.add('active');
+        btn.textContent = m.name;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderContent(i);
+        });
+        tabContainer.appendChild(btn);
+    });
+}
+
+function renderContent(idx) {
+    const m = MONTHS[idx];
+    const isCurrentMonth = idx === currentMonth;
+    const seasonBg = SEASON_BG[m.seasonColor] || SEASON_BG.emerald;
+
+    contentContainer.innerHTML = `
+        <div class="bg-brand-800/50 backdrop-blur-md rounded-2xl border border-brand-600/40 shadow-2xl p-6 md:p-8">
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <h2 class="text-2xl font-extrabold text-white">${m.name}</h2>
+                        ${isCurrentMonth ? '<span class="text-xs bg-brand-500/30 text-brand-300 border border-brand-400/40 rounded-full px-2 py-0.5">Aktueller Monat</span>' : ''}
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border ${seasonBg}">
+                        <i data-lucide="${m.seasonIcon}" class="w-3 h-3"></i>${m.season}
+                    </span>
+                </div>
+                <div class="text-right text-xs text-brand-300">
+                    <span class="font-semibold text-brand-200">${m.tasks.length} Aufgaben</span> in diesem Monat
+                </div>
+            </div>
+
+            <!-- Tip -->
+            <div class="flex gap-3 bg-brand-600/20 border border-brand-500/20 rounded-xl p-4 mb-6">
+                <i data-lucide="lightbulb" class="w-5 h-5 text-brand-400 flex-shrink-0 mt-0.5"></i>
+                <p class="text-sm text-brand-200"><strong class="text-brand-300">Tipp:</strong> ${m.tip}</p>
+            </div>
+
+            <!-- Tasks -->
+            <div class="grid sm:grid-cols-2 gap-4">
+                ${m.tasks.map(t => {
+                    const c = CAT[t.cat] || CAT.garten;
+                    return `
+                    <div class="task-card bg-brand-700/40 rounded-xl p-5 border border-brand-500/20 hover:border-brand-400/40 transition-all ${c.cls}">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="${c.icon}" class="w-4 h-4 ${c.iconCls} flex-shrink-0"></i>
+                                <span class="font-semibold text-white text-sm">${t.title}</span>
+                            </div>
+                            <span class="text-xs rounded-full px-2 py-0.5 flex-shrink-0 prio-${t.prio}">${t.prio}</span>
+                        </div>
+                        <p class="text-brand-200 text-sm leading-relaxed">${t.desc}</p>
+                        <span class="inline-block mt-3 text-xs text-brand-400 font-medium">${c.label}</span>
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>`;
+    lucide.createIcons();
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+renderTabs();
+renderContent(currentMonth);
+
+// Scroll active tab into view on mobile
+setTimeout(() => {
+    const activeBtn = tabContainer.querySelector('.active');
+    if (activeBtn) activeBtn.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+}, 50);
+
+lucide.createIcons();
+</script>
+</body>
+</html>
