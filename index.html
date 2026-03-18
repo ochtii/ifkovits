@@ -11,44 +11,11 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#ecf5f0',
-                            100: '#d4e9e1',
-                            200: '#a8d5c4',
-                            300: '#7cc0a8',
-                            400: '#52a989',
-                            500: '#2d8659', // Rich forest green
-                            600: '#1f6b45', // Dark forest
-                            700: '#155a38', // Very dark forest
-                            800: '#0f472d', // Almost black green
-                            900: '#082b1d', // Deep forest night
-                        },
-                        forest: {
-                            light: '#e8f4f0',
-                            sage: '#8ba899',
-                            moss: '#6b8e6f',
-                            pine: '#2d5a3d',
-                            dark: '#1a3a26',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    backgroundImage: {
-                        'forest-pattern': "url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><defs><pattern id=%22pattern%22 x=%220%22 y=%220%22 width=%22100%22 height=%22100%22 patternUnits=%22userSpaceOnUse%22><path d=%22M0,50 Q25,30 50,50 T100,50%22 fill=%22none%22 stroke=%22rgba(0,0,0,0.05)%22 stroke-width=%222%22/></pattern></defs><rect width=%22100%22 height=%22100%22 fill=%22white%22/><rect width=%22100%22 height=%22100%22 fill=%22url(%23pattern)%22/></svg>')"  
-                    }
-                }
-            }
-        }
-    </script>
-    
+    <script src="tailwind-config.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -388,24 +355,48 @@
         </div>
     </section>
 
-    <!-- Footer / Impressum -->
-<footer class="bg-brand-900/80 text-brand-100 py-12 border-t border-brand-700/50 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-center md:text-left">
-            <span class="text-white font-bold text-lg block">Mario Ifkovits</span>
-            <span class="text-brand-200">Haus, Garten & Holzarbeiten</span>
+    <!-- Footer -->
+    <footer class="bg-brand-900 border-t border-brand-700/50 text-brand-100 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Brand -->
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="bg-brand-400 p-2 rounded-lg text-brand-900"><i data-lucide="trees" class="w-5 h-5"></i></div>
+                    <span class="font-bold text-white text-lg">Mario Ifkovits</span>
+                </div>
+                <p class="text-brand-200 text-sm leading-relaxed">Verlässlicher Service für Haus, Garten & Holzarbeiten in Neuberg im Burgenland.</p>
+                <p class="text-brand-300 text-xs mt-3">Freies Gewerbe · Kleinunternehmer gem. § 6 Abs. 1 Z 27 UStG</p>
+            </div>
+            <!-- Navigation -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Navigation</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#leistungen" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Leistungen</a></li>
+                    <li><a href="#preise" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Preise</a></li>
+                    <li><a href="#ki-schaetzer" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">✨ KI-Schätzer</a></li>
+                    <li><a href="#kontakt" class="footer-link text-brand-200 hover:text-brand-400 transition-colors">Kontakt</a></li>
+                </ul>
+            </div>
+            <!-- Kontakt -->
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Kontakt</h4>
+                <address class="not-italic text-sm space-y-2 text-brand-200">
+                    <p>Untere Hauptstraße 35<br>7537 Neuberg im Burgenland</p>
+                    <p><a href="tel:+43000000000" class="footer-link hover:text-brand-400 transition-colors">+43 (0) XXX XXX XX XX</a></p>
+                    <p><a href="mailto:office@ifkovits-service.at" class="footer-link hover:text-brand-400 transition-colors">office@ifkovits-service.at</a></p>
+                </address>
+            </div>
         </div>
-        
-        <div class="text-center text-sm space-y-2">
-            <p><strong class="text-white">Impressum:</strong> Mario Ifkovits | Untere Hauptstraße 35 | 7537 Neuberg im Burgenland</p>
-            <p class="text-brand-200">Einzelunternehmer | Freies Gewerbe</p>
-            <p class="text-brand-200">USt-IdNr.: Befreit gem. § 6 Abs. 1 Z 27 UStG (Kleinunternehmer)</p>
+        <!-- Bottom bar -->
+        <div class="border-t border-brand-700/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-brand-300">
+                <p>&copy; <span id="year"></span> Mario Ifkovits. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-5">
+                    <a href="impressum.html" class="hover:text-brand-400 transition-colors">Impressum & Datenschutz</a>
+                </div>
+            </div>
         </div>
-        
-        <div class="text-sm text-brand-200">
-        </div>
-    </div>
-</footer>
+    </footer>
 
 <!-- Initialize Icons & Year -->
 <script>
